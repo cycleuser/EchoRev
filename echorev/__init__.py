@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-version = '0.0.3'
+version = '0.0.4'
 date = '2020-02-16'
 
 dpi = 128
@@ -79,7 +79,7 @@ class echorev(QMainWindow):
         self.menuHelp.addAction(self.actionQuit)
         self.statusbar = QStatusBar(self)
         self.statusbar.setObjectName('statusbar')
-        self.statusbar.showMessage('Writen by '+ author+'. The version is '+version+ '. Released at '+date)
+        self.statusbar.showMessage('The version is '+version+ '. Released at '+date)
         self.setStatusBar(self.statusbar)
 
         self.show()
