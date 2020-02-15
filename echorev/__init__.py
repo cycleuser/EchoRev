@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 
 
-version = '0.0.5'
+version = '0.0.6'
 date = '2020-02-16'
 
 dpi = 128
 # coding:utf-8
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QMainWindow, QWidget, QTextEdit, QMessageBox, QApplication, QVBoxLayout, QStatusBar, QMenu, QMenuBar, QAction, qApp
+from PyQt5.QtWidgets import QMainWindow, QWidget, QTextEdit, QMessageBox, QApplication, QHBoxLayout, QVBoxLayout, QStatusBar, QMenu, QMenuBar, QAction, qApp, QLabel ,QSlider
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import Qt
 import sys, os, re, webbrowser, requests
@@ -50,9 +50,25 @@ class echorev(QMainWindow):
         self.textbox_input.textChanged.connect(self.Magic)
         self.textbox_output = GrowingTextEdit(self)
 
+
+        self.slider_label = QLabel('Horizontal Reverse')
+        self.slider = QSlider(Qt.Horizontal)
+        self.slider.setRange(0, 2)
+        self.slider.setValue(0)
+        self.slider.setTracking(True)
+        self.slider.setTickPosition(QSlider.TicksBothSides)
+        self.slider.valueChanged.connect(self.Magic)  # int
+
+
+        self.hbox = QHBoxLayout()
         self.vbox = QVBoxLayout()
+        self.hbox.addWidget(self.slider_label)
+        self.hbox.addWidget(self.slider)
         self.vbox.addWidget(self.textbox_input)
         self.vbox.addWidget(self.textbox_output)
+
+        self.vbox.addLayout(self.hbox)
+
 
         self.main_widget.setLayout(self.vbox)
         self.setCentralWidget(self.main_widget)
@@ -82,11 +98,23 @@ class echorev(QMainWindow):
         self.statusbar.showMessage('The version is '+version+ '. Released at '+date)
         self.setStatusBar(self.statusbar)
 
+        w=self.width()
+        h=self.height()
+        self.slider.setFixedWidth(w/10)
+
         self.show()
+
+
+    def is_Chinese(self,word):
+        for ch in word:
+            if '\u4e00' <= ch <= '\u9fff':
+                return True
+        return False
+
+
     def goGitHub(self):
         webbrowser.open('https://github.com/cycleuser/EchoRev')
         self.statusbar.showMessage('The version is ' + version + '. Released at ' + date)
-
 
     def checkVersion(self):
         self.statusbar.showMessage('The version is ' + version + '. Released at ' + date)
@@ -150,6 +178,16 @@ class echorev(QMainWindow):
 
     def Magic(self):
         result = ''
+
+        slider_value = int(self.slider.value())
+
+        if slider_value ==0:
+            self.slider_label.setText('Horizontal Reverse')
+        elif slider_value ==1:
+            self.slider_label.setText('Vertical Reverse')
+        else:
+            self.slider_label.setText('Traditional Chinese')
+
         if (self.textbox_input.toPlainText() != ''):
             str = (self.textbox_input.toPlainText())
             #print(str)
@@ -158,14 +196,51 @@ class echorev(QMainWindow):
 
             raw_list = str.split('\n')
             #print(raw_list)
-            rev_list=[]
+            rev_list = []
+            out_list = []
 
-            for i in raw_list:
-                rev_list.append(i[::-1])
+            if slider_value == 0:
+                for i in raw_list:
+                    rev_list.append(i[::-1])
+                # print(rev_list)
+                pass
+            else:
+                max_lenth=0
+                for i in raw_list:
+                    if len(i)>max_lenth:
+                        max_lenth=len(i)
 
-            #print(rev_list)
-            #str_list.reverse()
 
+                for i in range(max_lenth):
+                    tmp_str=''
+                    for j in raw_list:
+                        try:
+                            tmp_str = tmp_str +''.join(j[i])
+
+                        except(IndexError):
+                            if self.is_Chinese(raw_list):
+                                tmp_str = tmp_str +''.join('\u3000')
+                            else:
+                                tmp_str = tmp_str +''.join('\u0020')
+
+
+                            print(tmp_str)
+
+
+                    print(tmp_str)
+                    if slider_value == 1:
+                        pass
+                        out_list.append(''.join(tmp_str))
+                    elif slider_value == 2:
+                        out_list.append(''.join(tmp_str)[::-1])
+                    else:
+                        pass
+
+
+                print('raw is',raw_list)
+                print('\n out is',out_list)
+
+                rev_list = out_list
 
             for k in rev_list:
                 result= result +''.join(k)+'\n'
