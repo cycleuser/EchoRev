@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 
 
-version = '0.0.2'
-date = '2020-02-15'
-author = 'CycleUser'
+version = '0.0.3'
+date = '2020-02-16'
 
 dpi = 128
 # coding:utf-8
@@ -86,11 +85,11 @@ class echorev(QMainWindow):
         self.show()
     def goGitHub(self):
         webbrowser.open('https://github.com/cycleuser/EchoRev')
-        self.statusbar.showMessage('Writen by ' + author + '. The version is ' + version + '. Released at ' + date)
+        self.statusbar.showMessage('The version is ' + version + '. Released at ' + date)
 
 
     def checkVersion(self):
-        self.statusbar.showMessage('Writen by ' + author + '. The version is ' + version + '. Released at ' + date)
+        self.statusbar.showMessage('The version is ' + version + '. Released at ' + date)
         #reply = QMessageBox.information(self, 'Version', self.talk)
 
         url = 'https://github.com/cycleuser/EchoRev/master/echorev/__init__.py'
@@ -160,7 +159,7 @@ class echorev(QMainWindow):
             result= ''.join(one_str_list)
             #print(result)
             self.textbox_output.setText(result)
-            self.statusbar.showMessage('Writen by ' + author + '. The version is ' + version + '. Released at ' + date)
+            self.statusbar.showMessage('The version is ' + version + '. Released at ' + date)
             self.show()
 '''
 if __name__ == '__main__':
