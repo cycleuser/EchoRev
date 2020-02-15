@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-version = '0.0.4'
+version = '0.0.5'
 date = '2020-02-16'
 
 dpi = 128
@@ -149,15 +149,31 @@ class echorev(QMainWindow):
                                                       self.talk +  'This is the latest version.')
 
     def Magic(self):
-
+        result = ''
         if (self.textbox_input.toPlainText() != ''):
-            one_str = (self.textbox_input.toPlainText())
-            #print(one_str)
-            one_str_list = list(one_str)
-            #print(one_str_list)
-            one_str_list.reverse()
-            result= ''.join(one_str_list)
+            str = (self.textbox_input.toPlainText())
+            #print(str)
+            str_list = list(str)
+            #print(str_list)
+
+            raw_list = str.split('\n')
+            #print(raw_list)
+            rev_list=[]
+
+            for i in raw_list:
+                rev_list.append(i[::-1])
+
+            #print(rev_list)
+            #str_list.reverse()
+
+
+            for k in rev_list:
+                result= result +''.join(k)+'\n'
+
+
+            #result= ''.join(rev_list)
             #print(result)
+
             self.textbox_output.setText(result)
             self.statusbar.showMessage('The version is ' + version + '. Released at ' + date)
             self.show()
