@@ -1,0 +1,1 @@
+pyinstaller -F -w  __init__.py

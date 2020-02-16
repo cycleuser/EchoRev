@@ -2,4 +2,4 @@
 --index https://pypi.python.org/simple/
 
 PyQt5
-#PyQt5>=5.12
+#PyQt5>=5.9.2

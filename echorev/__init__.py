@@ -2,16 +2,15 @@
 # -*- coding: utf-8 -*-
 
 
-version = '0.0.6'
+version = '0.0.7'
 date = '2020-02-16'
 
 dpi = 128
 # coding:utf-8
 
-from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QWidget, QTextEdit, QMessageBox, QApplication, QHBoxLayout, QVBoxLayout, QStatusBar, QMenu, QMenuBar, QAction, qApp, QLabel ,QSlider
 from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTranslator
 import sys, os, re, webbrowser, requests
 
 LocationOfMySelf=os.path.dirname(__file__)
@@ -264,7 +263,7 @@ def main():
     import sys
 
     app = QApplication(sys.argv)
-    trans = QtCore.QTranslator()
+    trans = QTranslator()
     # trans.load('cn')  # 没有后缀.qm
     app.installTranslator(trans)
     mainWin = echorev()
