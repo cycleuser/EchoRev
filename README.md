@@ -11,8 +11,8 @@ a GUI tool to help you reverse your input text.
 
 ```Bash
 pip install requests
-pip install pyqt5.sip      
-pip install pyqt5 
+pip install pyside6
+pip install cryptography
 pip install echorev 
 python -c "import echorev;echorev.main()"
 ```

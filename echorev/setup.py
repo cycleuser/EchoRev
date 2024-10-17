@@ -29,5 +29,6 @@ setup(name='echorev',
 
       install_requires=[
                         'PySide6',
+                        'cryptography'
                          ],
      )
