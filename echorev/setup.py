@@ -28,6 +28,6 @@ setup(name='echorev',
 
 
       install_requires=[
-                        'PyQt5',
+                        'PySide6',
                          ],
      )
