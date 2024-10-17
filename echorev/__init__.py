@@ -1,8 +1,8 @@
 ﻿#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-version = '0.0.9'  # 定义版本号
-date = '2024-10-18'  # 定义发布日期
+version = '0.1.1'  # 定义版本号
+date = '2024-10-19'  # 定义发布日期
 
 dpi = 128  # 定义DPI
 # coding:utf-8
@@ -71,10 +71,8 @@ class echorev(QMainWindow):
         self.textbox_input.textChanged.connect(self.Magic)  # 连接文本变化信号到Magic槽
         self.textbox_output = GrowingTextEdit(watermark_text="Text Output")  # 创建输出文本框
 
-        self.textbox_crype = GrowingTextEdit(watermark_text="Text Crype")  # 创建加密文本框
-        # self.textbox_crype.textChanged.connect(self.MagicCrype)  
-        self.textbox_decrypt = GrowingTextEdit(watermark_text="Text Decrypt") # 创建解密文本框
-        # self.textbox_decrypt.textChanged.connect(self.MagicDecrypt)
+        self.textbox_encrypte = GrowingTextEdit(watermark_text="Text Encrypted")  # 创建加密文本框
+        self.textbox_decryptede = GrowingTextEdit(watermark_text="Text Decrypted") # 创建解密文本框
 
         self.slider_label = QLabel('Horizontal Reverse')  # 创建滑块标签
         self.slider = QSlider(Qt.Horizontal)  # 创建水平滑块
@@ -93,9 +91,9 @@ class echorev(QMainWindow):
         self.hbox.addWidget(self.slider_label)  # 将滑块标签添加到水平布局
 
         self.hbox_up.addWidget(self.textbox_input) 
-        self.hbox_up.addWidget(self.textbox_crype)
+        self.hbox_up.addWidget(self.textbox_encrypte)
         self.hbox_down.addWidget(self.textbox_output)
-        self.hbox_down.addWidget(self.textbox_decrypt)
+        self.hbox_down.addWidget(self.textbox_decryptede)
 
         self.vbox.addLayout(self.hbox_up)  # 将水平布局添加到垂直布局
         self.vbox.addLayout(self.hbox_down)
@@ -131,13 +129,13 @@ class echorev(QMainWindow):
         self.actionLoadPublicKey.setObjectName('actionLoadPublicKey')
         self.actionLoadPublicKey.triggered.connect(self.load_public_key)
 
-        self.actionCrype = QAction(u'Crype', self)
-        self.actionCrype.setObjectName('actionCrype')
-        self.actionCrype.triggered.connect(self.MagicCrype)
+        self.actionEncrypted = QAction(u'Encrypted', self)
+        self.actionEncrypted.setObjectName('actionEncrypted')
+        self.actionEncrypted.triggered.connect(self.MagicEncrypted)
 
-        self.actionDecrypt = QAction(u'Decrypt', self)
-        self.actionDecrypt.setObjectName('actionDecrypt')
-        self.actionDecrypt.triggered.connect(self.MagicDecrypt)
+        self.actionDecrypted = QAction(u'Decrypted', self)
+        self.actionDecrypted.setObjectName('actionDecrypted')
+        self.actionDecrypted.triggered.connect(self.MagicDecrypted)
 
         self.menubar = self.menuBar()  # 创建菜单栏
         # self.menuHelp = self.menubar.addMenu('&Help')  # 添加帮助菜单
@@ -146,8 +144,8 @@ class echorev(QMainWindow):
         self.menubar.addAction(self.actionGenerateKeys)  # 将动作添加到菜单栏
         self.menubar.addAction(self.actionLoadPrivateKey)
         self.menubar.addAction(self.actionLoadPublicKey)
-        self.menubar.addAction(self.actionCrype)
-        self.menubar.addAction(self.actionDecrypt)
+        self.menubar.addAction(self.actionEncrypted)
+        self.menubar.addAction(self.actionDecrypted)
         self.menubar.addAction(self.actionWeb)
         self.menubar.addAction(self.actionVersionCheck)
         self.menubar.addAction(self.actionQuit)
@@ -425,7 +423,7 @@ class echorev(QMainWindow):
 
         return encrypted_message
 
-    def decrypt_message(self,encrypted_message):
+    def Decrypted_message(self,encrypted_message):
         # 加载私钥
         # with open('private_key.pem', 'rb') as priv_file:
         with open(self.private_key_path, 'rb') as priv_file:
@@ -435,7 +433,7 @@ class echorev(QMainWindow):
             )
 
         # 使用私钥解密文本
-        decrypted_message = private_key.decrypt(
+        Decrypted_message = private_key.Decrypted(
             encrypted_message,
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA256()),
@@ -444,16 +442,16 @@ class echorev(QMainWindow):
             )
         )
 
-        return decrypted_message
+        return Decrypted_message
 
 
 
-    def MagicCrype(self):
+    def MagicEncrypted(self):
         if self.public_key_path == '':
             print("Public key file not found.")
             self.load_public_key()
         # 获取要加密的文本
-        plaintext = self.textbox_decrypt.toPlainText()
+        plaintext = self.textbox_decryptede.toPlainText()
 
         if not plaintext:
             print("No text to encrypt.")
@@ -478,8 +476,8 @@ class echorev(QMainWindow):
         #     )
         # )
 
-        # # 将加密后的文本显示在textbox_crype
-        # self.textbox_crype.setPlainText(encrypted_message.hex())
+        # # 将加密后的文本显示在textbox_encrypte
+        # self.textbox_encrypte.setPlainText(encrypted_message.hex())
         # print("Text encrypted successfully.")
 
         # 分块加密
@@ -500,20 +498,20 @@ class echorev(QMainWindow):
         # 将所有加密的小块组合在一起
         encrypted_message = b''.join(encrypted_chunks)
 
-        # 将加密后的文本显示在textbox_crype
-        self.textbox_crype.setPlainText(encrypted_message.hex())
+        # 将加密后的文本显示在textbox_encrypte
+        self.textbox_encrypte.setPlainText(encrypted_message.hex())
 
         print("Text encrypted successfully.")
 
-    def MagicDecrypt(self):
+    def MagicDecrypted(self):
         if self.private_key_path == '':
             print("Private key file not found.")
             self.load_private_key()
         # 获取要解密的密文
-        encrypted_message_hex = self.textbox_crype.toPlainText()
+        encrypted_message_hex = self.textbox_encrypte.toPlainText()
 
         if not encrypted_message_hex:
-            print("No text to decrypt.")
+            print("No text to Decrypted.")
             return
 
         # 将十六进制字符串转换为字节
@@ -533,11 +531,11 @@ class echorev(QMainWindow):
 
         # 分块解密
         max_length = 256  # 对于4096位RSA密钥和OAEP填充，最大输出长度约为512字节
-        decrypted_chunks = []
+        Decrypted_chunks = []
         for i in range(0, len(encrypted_message), max_length):
             chunk = encrypted_message[i:i + max_length]
             try:
-                decrypted_chunk = private_key.decrypt(
+                Decrypted_chunk = private_key.decrypt(
                     chunk,
                     padding.OAEP(
                         mgf=padding.MGF1(algorithm=hashes.SHA256()),
@@ -545,18 +543,18 @@ class echorev(QMainWindow):
                         label=None
                     )
                 )
-                decrypted_chunks.append(decrypted_chunk)
+                Decrypted_chunks.append(Decrypted_chunk)
             except Exception as e:
-                print(f"Decryption failed: {e}")
+                print(f"Decryptedion failed: {e}")
                 return
 
         # 将所有解密的小块组合在一起
-        decrypted_message = b''.join(decrypted_chunks)
+        Decrypted_message = b''.join(Decrypted_chunks)
 
-        # 将解密后的文本显示在textbox_decrypt
-        self.textbox_decrypt.setPlainText(decrypted_message.decode('utf-8'))
+        # 将解密后的文本显示在textbox_decryptede
+        self.textbox_decryptede.setPlainText(Decrypted_message.decode('utf-8'))
 
-        print("Text decrypted successfully.")
+        print("Text Decrypteded successfully.")
 
 
 def main():
