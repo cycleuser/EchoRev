@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "echorev"
+version = "0.1.2"
+description = "A GUI tool to help you reverse text direction and encrypt/decrypt text"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [
+    {name = "cycleuser", email = "cycleuser@cycleuser.org"}
+]
+keywords = ["text", "reverse", "encryption", "rsa", "gui", "pyside6"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Text Processing",
+    "Topic :: Security :: Cryptography",
+]
+dependencies = [
+    "PySide6>=6.4.0",
+    "cryptography>=40.0.0",
+    "requests>=2.28.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/cycleuser/EchoRev"
+Repository = "https://github.com/cycleuser/EchoRev.git"
+Issues = "https://github.com/cycleuser/EchoRev/issues"
+
+[project.scripts]
+echorev = "echorev:main"
+
+[project.gui-scripts]
+echorev-gui = "echorev:main"
+
+[tool.setuptools]
+packages = ["echorev"]
+
+[tool.setuptools.package-data]
+echorev = ["*.png", "*.qm", "*.ttf", "*.ini", "*.md"]
